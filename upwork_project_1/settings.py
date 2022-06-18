@@ -25,12 +25,14 @@ SECRET_KEY = 'django-insecure-)7qc4_!og0-lq(lg&+%%03(#l8s9mhs5b!$!7@zchimpsr+civ
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['jmfveneroso.pythonanywhere.com']
+ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['jmfveneroso.pythonanywhere.com']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'senior_panel.apps.SeniorPanelConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -126,7 +128,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # default static files settings for PythonAnywhere.
 # see https://help.pythonanywhere.com/pages/DjangoStaticFiles for more info
-MEDIA_ROOT = '/home/jmfveneroso/upwork_project_1/media'
+MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
-STATIC_ROOT = '/home/jmfveneroso/upwork_project_1/static'
+STATIC_ROOT = BASE_DIR / 'static'
 STATIC_URL = '/static/'

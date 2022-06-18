@@ -1,0 +1,25 @@
+{% load static %}
+
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="{% static 'senior_panel.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'senior_panel.js' %}">
+  </head>
+  <body>
+    <p>User id: {{ user.id }}</p>
+    <p class="special">User username: {{ user.username }}</p>
+    <p>User header: {{ user.header }}</p>
+    <form method = "post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Upload</button>
+    </form>
+
+    <div>
+    {% for p in user.picture_set.all %}
+       <img src="/media/{{ p.img }}" width=100 height=100 />
+       {{ p.title }}
+    {% endfor %}
+    </div>
+  </body>
+</html>
