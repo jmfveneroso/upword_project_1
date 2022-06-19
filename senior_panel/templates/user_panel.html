@@ -1,30 +1,115 @@
+{% extends "base_generic.html" %}
+
 {% load static %}
 
-<html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'senior_panel.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'senior_panel.js' %}">
-  </head>
-  <body>
-    <p><a href="{% url 'logout' %}">Log Out</a></p>
-    <p>User id: {{ user.id }}</p>
-    <p class="special">User username: {{ user.username }}</p>
-    <p class="special">User name: {{ user.first_name }} {{ user.last_name }}</p>
-    <p>User header: {{ user_info.header }}</p>
-    <form method = "post" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Upload</button>
-    </form>
+{% block content %}
 
-    <div>
-    {% for p in user.picture_set.all %}
-       <div>
-         <p>{{ p.title }}</p>
-         <img src="/media/{{ p.img }}" width=100 height=100 />
-         <p><a href="{% url 'delete_picture' picture_id=p.id %}">Delete Picture</a></p>
-       </div>
-    {% endfor %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 my-class">
+      <p>User id: {{ user.id }}</p>
+      <p>User username: <span class="special">{{ user.username }}</span></p>
+      <p>User name: <span class="special">{{ user.first_name }} {{ user.last_name }}</span></p>
+      <p><a href="{% url 'logout' %}">Log Out</a></p>
     </div>
-  </body>
-</html>
+  </div>
+</div>
+
+<hr />
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="my-class panel panel-default">
+        <div class="panel-heading">Header</div>
+        <div class="panel-body">
+          <p>User header: {{ user_info.header }}</p>
+
+          <hr />
+
+          <form method = "post" action="{% url 'change_user_info' %}">
+            {% csrf_token %}
+            <!-- {{ user_info_form.as_p }} -->
+
+            <label>Header</label>
+            <input class="form-control" type="text" name="header"/>  
+ 
+            <br />
+
+            <button type="submit">Upload</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="my-class panel panel-default">
+        <div class="panel-heading">Calendar</div>
+        <div class="panel-body">
+          {% for e in user.calendarentry_set.all %}
+             <div>
+               <p>{{ e.date }}</p>
+               <p>{{ e.message}}</p>
+               <p><a href="{% url 'delete_calendar_entry' entry_id=e.id %}">Delete Entry</a></p>
+             </div>
+             <hr />
+          {% endfor %}
+
+          <form method = "post" action="{% url 'add_calendar_entry' %}">
+            {% csrf_token %}
+
+            <label>Date</label>
+            <input class="form-control" type="text" id="datetime" name="date"/>  
+
+            <br />
+
+            <label>Message</label>
+            <input class="form-control" type="text" name="message"/>  
+
+            <br />
+
+            <button type="submit">Upload</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="my-class panel panel-default">
+        <div class="panel-heading">Album</div>
+        <div class="panel-body">
+          {% for p in user.picture_set.all %}
+             <div>
+               <p class="my-img-title">{{ p.title }}</p>
+               <img src="/media/{{ p.img }}" class="my-img" />
+               <p><a href="{% url 'delete_picture' picture_id=p.id %}">Delete Picture</a></p>
+             </div>
+          {% endfor %}
+
+          <hr />
+
+          <form method = "post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- {{ form.as_p }} -->
+
+            <label>Title</label>
+            <input class="form-control" type="text" name="title"/>  
+
+            <br />
+
+            <label>Image</label>
+            <input type="file" name="image" accept="image/*" required="" id="id_image" >
+
+            <br />
+
+            <button type="submit">Upload</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'senior_panel.js' %}"></script>
+
+{% endblock %}

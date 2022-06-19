@@ -23,3 +23,9 @@ class Picture(models.Model):
   img = models.ImageField(upload_to='images/', default=None)
   user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+
+class CalendarEntry(models.Model):
+  message = models.CharField(max_length=200)
+  date = models.DateField(default=None)
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
+

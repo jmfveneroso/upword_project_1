@@ -1,3 +1,21 @@
+.login-panel{
+  margin: 50px auto;
+  width: 400px;
+}
+
 .special {
   color: red;
+}
+
+.my-class {
+  margin: 10px;
+}
+
+.my-img-title {
+  text-align: center;
+}
+
+.my-img {
+  border: 1px solid black;
+  width: 100%;
 }
