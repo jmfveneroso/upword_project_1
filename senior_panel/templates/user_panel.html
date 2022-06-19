@@ -25,6 +25,8 @@
         <div class="panel-body">
           <p>User header: {{ user_info.header }}</p>
 
+          <p>User status: {{ user_info.status }}</p>
+
           <hr />
 
           <form method = "post" action="{% url 'change_user_info' %}">
@@ -33,7 +35,22 @@
 
             <label>Header</label>
             <input class="form-control" type="text" name="header"/>  
+
+            <br />
  
+            <input type="radio" class="btn-check" name="status" id="idle" autocomplete="off" value="idle" checked>
+            <label class="btn btn-secondary" for="idle">Idle</label>
+            <br />
+            <input type="radio" class="btn-check" name="status" id="swimming" autocomplete="off" value="swimming">
+            <label class="btn btn-secondary" for="swimming">Swimming</label>
+            <br />
+            <input type="radio" class="btn-check" name="status" id="walking" autocomplete="off" value="walking">
+            <label class="btn btn-secondary" for="walking">Walking</label>
+            <br />
+            <input type="radio" class="btn-check" name="status" id="eating" autocomplete="off" value="eating">
+            <label class="btn btn-secondary" for="eating">Eating</label>
+            <br />
+
             <br />
 
             <button type="submit">Upload</button>

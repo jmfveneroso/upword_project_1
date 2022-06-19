@@ -13,6 +13,7 @@ class UserInfo(models.Model):
     primary_key=True,
   )
   header = models.CharField(max_length=200)
+  status = models.CharField(max_length=200, default='idle')
 
   def __str__(self):
     return self.user.username

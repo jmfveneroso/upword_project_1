@@ -32,14 +32,17 @@ class CalendarEntryForm(forms.Form):
 
 class UserInfoForm(forms.Form):
   header = forms.CharField()
+  status = forms.CharField()
 
   def save(self, user_id):
     if not self.is_valid():
       return
 
     header = self.cleaned_data.get("header")
-    img = self.cleaned_data.get("image")
+    status = self.cleaned_data.get("status")
+    print('status: ', status)
 
     user_info = UserInfo.objects.get(pk=user_id)
     user_info.header = header
+    user_info.status = status 
     user_info.save()
