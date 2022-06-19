@@ -6,9 +6,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'senior_panel.js' %}">
   </head>
   <body>
+    <p><a href="{% url 'logout' %}">Log Out</a></p>
     <p>User id: {{ user.id }}</p>
     <p class="special">User username: {{ user.username }}</p>
-    <p>User header: {{ user.header }}</p>
+    <p class="special">User name: {{ user.first_name }} {{ user.last_name }}</p>
+    <p>User header: {{ user_info.header }}</p>
     <form method = "post" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form.as_p }}
@@ -17,8 +19,11 @@
 
     <div>
     {% for p in user.picture_set.all %}
-       <img src="/media/{{ p.img }}" width=100 height=100 />
-       {{ p.title }}
+       <div>
+         <p>{{ p.title }}</p>
+         <img src="/media/{{ p.img }}" width=100 height=100 />
+         <p><a href="{% url 'delete_picture' picture_id=p.id %}">Delete Picture</a></p>
+       </div>
     {% endfor %}
     </div>
   </body>
