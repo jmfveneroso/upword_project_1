@@ -4,40 +4,26 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container margin-top-15">
   <div class="row">
-    <div class="col-md-12 my-class">
-      <p>User id: {{ user.id }}</p>
-      <p>User username: <span class="special">{{ user.username }}</span></p>
-      <p>User name: <span class="special">{{ user.first_name }} {{ user.last_name }}</span></p>
-      <p><a href="{% url 'logout' %}">Log Out</a></p>
-    </div>
-  </div>
-</div>
+    <div class="header-container col-10">
+      <div class="header-display">
+        <marquee id="title" behavior="scroll">{{ user_info.header }}</marquee> 
+      </div>
+      <div class="header-edit">
+        <form method = "post" action="{% url 'change_user_info' %}">
+          {% csrf_token %}
 
-<hr />
+          <div class="form-group row">
+            <label for="header" class="col-sm-2 col-form-label">Header</label>
+            <div class="col-sm-10">
+              <input type="text" name="header" class="form-control" >
+            </div>
+          </div>  
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="my-class panel panel-default">
-        <div class="panel-heading">Header</div>
-        <div class="panel-body">
-          <p>User header: {{ user_info.header }}</p>
-
-          <p>User status: {{ user_info.status }}</p>
-
-          <hr />
-
-          <form method = "post" action="{% url 'change_user_info' %}">
-            {% csrf_token %}
-            <!-- {{ user_info_form.as_p }} -->
-
-            <label>Header</label>
-            <input class="form-control" type="text" name="header"/>  
-
-            <br />
- 
+          <button type="submit" class="btn btn-primary margin-top-5">Upload</button>
+          
+          <div style="display: none;">
             <input type="radio" class="btn-check" name="status" id="idle" autocomplete="off" value="idle" checked>
             <label class="btn btn-secondary" for="idle">Idle</label>
             <br />
@@ -50,82 +36,126 @@
             <input type="radio" class="btn-check" name="status" id="eating" autocomplete="off" value="eating">
             <label class="btn btn-secondary" for="eating">Eating</label>
             <br />
-
-            <br />
-
-            <button type="submit">Upload</button>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
-
-    <div class="col-md-4">
-      <div class="my-class panel panel-default">
-        <div class="panel-heading">Calendar</div>
-        <div class="panel-body">
-          {% for e in user.calendarentry_set.all %}
-             <div>
-               <p>{{ e.date }}</p>
-               <p>{{ e.message}}</p>
-               <p><a href="{% url 'delete_calendar_entry' entry_id=e.id %}">Delete Entry</a></p>
-             </div>
-             <hr />
-          {% endfor %}
-
-          <form method = "post" action="{% url 'add_calendar_entry' %}">
-            {% csrf_token %}
-
-            <label>Date</label>
-            <input class="form-control" type="text" id="datetime" name="date"/>  
-
-            <br />
-
-            <label>Message</label>
-            <input class="form-control" type="text" name="message"/>  
-
-            <br />
-
-            <button type="submit">Upload</button>
-          </form>
-        </div>
-      </div>
+    <div class="header-controls col">
+      <button id="edit-calendar-btn" class="btn btn-primary header-display margin-auto" onclick="showEditHeader(true)">EDIT</button>
+      <button id="edit-calendar-btn" class="btn btn-secondary header-edit margin-auto" onclick="showEditHeader(false)">BACK</button> 
+      <button class="btn btn-link margin-auto"><a class="linkstyle" href="{% url 'logout' %}">Log Out</a></button>
     </div>
+  </div>    
+</div>
 
-    <div class="col-md-4">
-      <div class="my-class panel panel-default">
-        <div class="panel-heading">Album</div>
-        <div class="panel-body">
-          {% for p in user.picture_set.all %}
-             <div>
-               <p class="my-img-title">{{ p.title }}</p>
-               <img src="/media/{{ p.img }}" class="my-img" />
-               <p><a href="{% url 'delete_picture' picture_id=p.id %}">Delete Picture</a></p>
-             </div>
-          {% endfor %}
+<div class="container py-2">
+  <div class="row">
+      <div class="col x"><!--calendar-->
+          <div class="my-calendar">
+            {% for e in user.calendarentry_set.all %}
+              <div>
+                <div class="calendarstyle">{{ e.date }} <bold class="calendarstyle">{{ e.message }}</bold></div>
+                <p><a class="linkstyle" href="{% url 'delete_calendar_entry' entry_id=e.id %}">Delete Entry</a></p>
+              </div> 
+            {% endfor %}
+         </div>
+         <div class="my-calendar-edit-2">
+            <form method = "post" action="{% url 'add_calendar_entry' %}">
+              {% csrf_token %}
 
-          <hr />
+              <label class="calendarstyle">Date</label>
+              <input class="form-control" type="text" id="datetime" name="date"/>  
 
-          <form method = "post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <!-- {{ form.as_p }} -->
+              <br />
 
-            <label>Title</label>
-            <input class="form-control" type="text" name="title"/>  
+              <label class="calendarstyle">Message</label>
+              <input class="form-control" type="text" name="message"/>  
 
-            <br />
+              <br />
 
-            <label>Image</label>
-            <input type="file" name="image" accept="image/*" required="" id="id_image" >
-
-            <br />
-
-            <button type="submit">Upload</button>
-          </form>
-        </div>
+              <button class="btn btn-primary" type="submit">Upload</button>
+              <button id="edit-calendar-btn" class="btn btn-secondary my-calendar-edit" onclick="showEditCalendar(false)">BACK</button>
+            </form>
+         </div>
+         <button id="edit-calendar-btn" class="btn btn-primary my-calendar" onclick="showEditCalendar(true)">EDIT</button>     
       </div>
-    </div>
+      <div class="col xx">
+          <div class="circle" id="clock" onload="showTime()">
+          </div>
+          <div id="week"></div>
+      </div>
+      <div class="col xx2"> <!--carousel-->
+        <div id="carouselExampleIndicators" class="carousel slide carousel-display" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+              {% for p in user.picture_set.all %}
+                {% if forloop.counter == 1 %}
+                  <div class="carousel-item active">
+                {% else %}
+                  <div class="carousel-item">
+                {% endif %}
+                    <div>
+                      <div class="img-container">
+                        <img class="my-img" src="/media/{{ p.img }}">
+                        <p class="my-img-title calendarstyle">{{ p.title }}</p>
+                        <p class="my-img-delete"><a class="linkstyle" href="{% url 'delete_picture' picture_id=p.id %}">Delete Picture</a></p>
+                      </div>  
+                    </div>
+                  </div>  
+              {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+          <div class="carousel-edit">
+            <form method = "post" enctype="multipart/form-data">
+              {% csrf_token %}
+
+              <label class="calendarstyle">Title</label>
+              <input class="form-control" type="text" name="title"/>  
+
+              <br />
+
+              <label class="calendarstyle">Image</label>
+              <input class="form-control" type="file" name="image" accept="image/*" required="" id="id_image" >
+
+              <br />
+
+              <button class="btn btn-primary" type="submit">Upload</button>
+              <button onclick="showEditPicture(false)" class="btn btn-secondary carousel-edit">BACK</button>
+            </form>
+          </div>
+          <button onclick="showEditPicture(true)" class="btn btn-primary carousel-display">EDIT</button>
+      </div>   
   </div>
 </div>
+<div class="container py-2">
+  <div class="row">
+      <div class="col">
+      </div>
+      <div class="col"> <!--buttons-->
+          <div class="btn-group btn-group-lg" role="group" aria-label="Basic outlined example">
+              <button type="button" class="btn btn-outline-primary">Hjemme</button>
+              <button type="button" class="btn btn-outline-primary">Svomming</button>
+              <button type="button" class="btn btn-outline-primary">Benne</button>
+              <button type="button" class="btn btn-outline-primary">Handler</button>
+            </div>
+          
+      </div>
+      <div class="col">
+      </div>   
+  </div>
+</div>  
 
 <script src="{% static 'senior_panel.js' %}"></script>
 

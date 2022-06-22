@@ -1,3 +1,33 @@
+.margin-top-15 {
+  margin-top: 15px;
+}
+
+.margin-top-5 {
+  margin-top: 5px;
+}
+
+.margin-auto {
+  margin: 0 auto;
+}
+
+.no-style {
+  text-decoration: none;
+}
+
+.header-container{
+  background-color: #93ADBA;
+  text-align: center;
+  padding: 10px;
+  border-top-left-radius: 10px;
+}
+
+.header-controls{
+  background-color: #444444;
+  text-align: center;
+  padding: 10px;
+  border-top-right-radius: 10px;
+}
+
 .login-panel{
   margin: 50px auto;
   width: 400px;
@@ -15,7 +45,124 @@
   text-align: center;
 }
 
+.img-container {
+  text-align: center;
+}
+
 .my-img {
   border: 1px solid black;
-  width: 100%;
+  width: 250px;
+  height: 250px;
+  background: black;
+  object-fit: contain;
 }
+
+#title{
+  font-size: 60px;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 5px;
+  padding-bottom: -10px;
+margin-right: 10px ;
+margin-left: 10px ;
+margin-top:-10px;
+  margin-bottom:-11px;
+font-family: sans-serif;  
+color: #545454;
+  font-weight: bold;
+}
+body{
+  background-color: #ADCCDB;
+}
+.col.x{
+background-color: #93ADBA;
+padding: 25px;
+}
+.col.xx2{
+background-color: #93ADBA;
+padding: 25px;
+}
+#week{
+font-size: 15pt;
+font-weight: bold;
+text-align: center;
+}
+.circle{
+background-image: url("circle.png");
+background-repeat:no-repeat;
+background-size: 100%;
+display: flex;
+justify-content: center;
+top: 50%;
+padding-top: 140px;
+font-size: 35pt;
+font-weight: bold;
+height: 370px;
+text-align: center;
+margin-bottom:-10px;
+}
+::placeholder{
+font-size: large;
+color: #545454;
+font-weight: bold;
+}
+.input{
+  text-align: center;
+  background-color: #93ADBA;
+  color: #545454;
+  border: #93ADBA;
+}
+button{
+  margin-left: 25px;
+  padding: 12px;
+}
+.my-calendar{
+  display: block;
+}
+.my-calendar-edit{
+  display: none;   
+}
+.my-calendar-edit-2{
+  display: none;   
+}
+.carousel-display{
+  display: block;
+
+}
+.carousel-edit{
+  display: none;   
+}
+
+.header-display{
+  display: block;
+}
+.header-edit{
+  display: none;   
+}
+.w-100 {
+  max-width: 100px;
+  max-height: 100px;
+}
+a.linkstyle:link{
+  text-decoration: none;
+  font-family: sans-serif;
+  color: white;	
+}
+a.linkstyle:visited{
+ font-family: sans-serif;
+ color: white;
+ text-decoration: none;
+}
+a.linkstyle:hover{
+ font-family: sans-serif;
+ color: blue;
+ text-decoration: blink;
+
+}
+
+.calendarstyle{
+font-weight: bold;
+color: #444444;
+font-size: 20px;
+}
+
