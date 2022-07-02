@@ -63,12 +63,12 @@
   padding-right: 25px;
   padding-top: 5px;
   padding-bottom: -10px;
-margin-right: 10px ;
-margin-left: 10px ;
-margin-top:-10px;
+  margin-right: 10px ;
+  margin-left: 10px ;
+  margin-top:-10px;
   margin-bottom:-11px;
-font-family: sans-serif;  
-color: #545454;
+  font-family: sans-serif;  
+  color: black;
   font-weight: bold;
 }
 body{
@@ -83,23 +83,20 @@ background-color: #93ADBA;
 padding: 25px;
 }
 #week{
-font-size: 15pt;
+font-size: 35pt;
 font-weight: bold;
 text-align: center;
+color: black;
 }
 .circle{
-background-image: url("circle.png");
-background-repeat:no-repeat;
-background-size: 100%;
-display: flex;
 justify-content: center;
-top: 50%;
 padding-top: 140px;
-font-size: 35pt;
+font-size: 75px;
 font-weight: bold;
 height: 370px;
 text-align: center;
 margin-bottom:-10px;
+color: black;
 }
 ::placeholder{
 font-size: large;
@@ -162,7 +159,7 @@ a.linkstyle:hover{
 
 .calendarstyle{
 font-weight: bold;
-color: #444444;
-font-size: 20px;
+color: black;
+font-size: 25px;
 }
 
