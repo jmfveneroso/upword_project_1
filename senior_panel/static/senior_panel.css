@@ -163,3 +163,37 @@ color: black;
 font-size: 25px;
 }
 
+.header-entry-admin{
+  font-size: 16px;
+  float: left;
+  border: 1px solid black;
+  padding: 5px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.header-entry-user + .header-entry-user::before{
+  content: "--- ";
+}
+.status-display{
+  display: block;
+}
+.status-edit{
+  display: none;   
+}
+.status-edit-block{
+  border: 1px solid black;   
+  border-radius: 5px;
+  padding: 10px;
+}
+.status-controls{
+  margin-top: 10px;
+}
+button{
+  margin-left: 0px;
+}
+
+button a{
+  text-decoration: none;
+  color: black;
+}

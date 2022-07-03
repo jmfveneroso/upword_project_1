@@ -1,6 +1,28 @@
+const kCarouselSlideInterval = 6000
+const kCarouselTitleInterval = 3000
+
 $('#datetime').datetimepicker({ 
   format: 'YYYY-MM-DD',
   defaultDate: moment(),
+});
+
+$('#carouselExampleIndicators').carousel({
+    interval: kCarouselSlideInterval 
+});
+
+$('#carouselExampleIndicators').on('slid.bs.carousel', function () {
+  console.log('wtfwtf')
+  var titles = document.getElementsByClassName('my-img-title');
+  for (var i = 0; i < titles.length; ++i) {
+      titles[i].style.display = 'none';
+  }
+
+  setTimeout(function () {
+    var titles = document.getElementsByClassName('my-img-title');
+    for (var i = 0; i < titles.length; ++i) {
+        titles[i].style.display = 'block';
+    }
+  }, kCarouselTitleInterval);
 });
 
 function showTime(){
@@ -74,6 +96,18 @@ function showEditHeader(show){
   }
 
   elements = document.getElementsByClassName('header-edit');
+  for (var i = 0; i < elements.length; ++i) {
+      elements[i].style.display = (show) ? 'block' : 'none';
+  }
+}
+
+function showEditStatus(show){
+  var elements = document.getElementsByClassName('status-display');
+  for (var i = 0; i < elements.length; ++i) {
+      elements[i].style.display = (show) ? 'none' : 'block';
+  }
+
+  elements = document.getElementsByClassName('status-edit');
   for (var i = 0; i < elements.length; ++i) {
       elements[i].style.display = (show) ? 'block' : 'none';
   }

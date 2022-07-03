@@ -1,0 +1,178 @@
+{% extends "base_generic.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container margin-top-15">
+  <div class="row">
+    <div class="header-container col-10">
+      <div class="header-display">
+        <div>
+            {% for e in user.headerentry_set.all %}
+              <div class="header-entry-admin">
+                {{ e.message }} <br />
+                <a class="linkstyle" href="{% url 'delete_header_entry' entry_id=e.id %}">Delete Entry</a>
+              </div> 
+            {% endfor %}
+          <!-- {{ user_info.header }} -->
+        </div> 
+        <button id="edit-calendar-btn" class="btn btn-primary header-display margin-auto" onclick="showEditHeader(true)" style="float: right;">EDIT</button>
+      </div>
+      <div class="header-edit">
+        <form method = "post" action="{% url 'add_header_entry' %}">
+          {% csrf_token %}
+
+          <div class="form-group row">
+            <label for="message" class="col-sm-2 col-form-label">Header</label>
+            <div class="col-sm-10">
+              <input type="text" name="message" class="form-control" >
+            </div>
+          </div>  
+
+          <div class="btn-group btn-group-lg" role="group">
+            <button type="submit" class="btn btn-primary margin-top-5">Upload</button>
+            <button id="edit-calendar-btn" type="button" class="btn btn-secondary margin-top-5" onclick="showEditHeader(false)">BACK</button> 
+          </div>  
+        </form>
+      </div>
+    </div>
+    <div class="header-controls col">
+      <button id="edit-calendar-btn" class="btn btn-danger header-display margin-auto"><a href="{% url 'user_panel' %}">User View</a></button>
+      <button class="btn btn-link margin-auto"><a class="linkstyle" href="{% url 'logout' %}">Log Out</a></button>
+    </div>
+  </div>    
+</div>
+
+<div class="container py-2">
+  <div class="row">
+      <div class="col x"><!--calendar-->
+          <div class="my-calendar">
+            {% for e in calendar_entries %}
+              <div>
+                <div class="calendarstyle">{{ e.date }} <bold class="calendarstyle">{{ e.message }}</bold></div>
+                <p><a class="linkstyle" href="{% url 'delete_calendar_entry' entry_id=e.id %}">Delete Entry</a></p>
+              </div> 
+            {% endfor %}
+         </div>
+         <div class="my-calendar-edit-2">
+            <form method = "post" action="{% url 'add_calendar_entry' %}">
+              {% csrf_token %}
+
+              <label class="calendarstyle">Date</label>
+              <input class="form-control" type="text" id="datetime" name="date"/>  
+
+              <br />
+
+              <label class="calendarstyle">Message</label>
+              <input class="form-control" type="text" name="message"/>  
+
+              <br />
+
+              <button class="btn btn-primary" type="submit">Upload</button>
+              <button id="edit-calendar-btn" type="button" class="btn btn-secondary my-calendar-edit" onclick="showEditCalendar(false)">BACK</button>
+            </form>
+         </div>
+         <button id="edit-calendar-btn" class="btn btn-primary my-calendar" onclick="showEditCalendar(true)">EDIT</button>     
+      </div>
+      <div class="col xx">
+          <div class="circle" id="clock" onload="showTime()">
+          </div>
+          <div id="week"></div>
+      </div>
+      <div class="col xx2"> <!--carousel-->
+        <div id="carouselExampleIndicators" class="carousel slide carousel-display" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner" style="min-height: 400px;">
+              {% for p in user.picture_set.all %}
+                {% if forloop.counter == 1 %}
+                  <div class="carousel-item active">
+                {% else %}
+                  <div class="carousel-item">
+                {% endif %}
+                    <div>
+                      <div class="img-container">
+                        <img class="my-img" src="/media/{{ p.img }}">
+                        <p class="my-img-title calendarstyle">{{ p.title }}</p>
+                        <p class="my-img-delete"><a class="linkstyle" href="{% url 'delete_picture' picture_id=p.id %}">Delete Picture</a></p>
+                      </div>  
+                    </div>
+                  </div>  
+              {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+          <div class="carousel-edit">
+            <form method = "post" enctype="multipart/form-data">
+              {% csrf_token %}
+
+              <label class="calendarstyle">Title</label>
+              <input class="form-control" type="text" name="title"/>  
+
+              <br />
+
+              <label class="calendarstyle">Image</label>
+              <input class="form-control" type="file" name="image" accept="image/*" required="" id="id_image" >
+
+              <br />
+
+              <button class="btn btn-primary" type="submit">Upload</button>
+              <button onclick="showEditPicture(false)" class="btn btn-secondary carousel-edit">BACK</button>
+            </form>
+          </div>
+          <button onclick="showEditPicture(true)" class="btn btn-primary carousel-display">EDIT</button>
+      </div>   
+  </div>
+</div>
+<div class="container py-2">
+  <div class="row">
+      <div class="col">
+      </div>
+      <div class="col"> <!--buttons-->
+          <div class="status-display">
+            <div style="margin: 0 auto; text-align: center;">
+              <div class="btn-group btn-group-lg" role="group">
+                {% for s in status_types %}
+                  <button type="button" class="btn btn-outline-primary">{{ s }}</button>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="status-edit status-edit-block">
+            <form method = "post" action="{% url 'change_user_info' %}">
+              {% csrf_token %}
+
+              <div class="form-group row">
+                <label for="status_types">Status Types (separated by comma)</label>
+                <div class="col-sm-10">
+                  <input type="text" name="status_types" class="form-control" value="{{ status_types_str }}">
+                </div>
+              </div>  
+
+              <button type="submit" class="btn btn-primary margin-top-5">Upload</button>
+              <button type="button" class="btn btn-secondary margin-top-5" onclick="showEditStatus(false)">BACK</button> 
+            </form>
+          </div>
+          <div class="status-controls">
+            <button class="btn btn-primary status-display margin-auto" onclick="showEditStatus(true)">EDIT</button>
+          </div>
+      </div>
+      <div class="col">
+      </div>   
+  </div>
+</div>  
+
+<script src="{% static 'senior_panel.js' %}"></script>
+
+{% endblock %}

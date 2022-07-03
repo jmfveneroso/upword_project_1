@@ -1,5 +1,5 @@
 from django import forms
-from .models import CalendarEntry, Picture, User, UserInfo
+from .models import CalendarEntry, Picture, User, UserInfo, HeaderEntry
 
 class PictureForm(forms.Form):
   title = forms.CharField()
@@ -31,18 +31,27 @@ class CalendarEntryForm(forms.Form):
     obj.save()
 
 class UserInfoForm(forms.Form):
-  header = forms.CharField()
-  status = forms.CharField()
+  status_types = forms.CharField()
 
   def save(self, user_id):
     if not self.is_valid():
       return
 
-    header = self.cleaned_data.get("header")
-    status = self.cleaned_data.get("status")
-    print('status: ', status)
+    status_types = self.cleaned_data.get("status_types")
 
     user_info = UserInfo.objects.get(pk=user_id)
-    user_info.header = header
-    user_info.status = status 
+    user_info.status_types = status_types 
     user_info.save()
+
+class HeaderEntryForm(forms.Form):
+  message = forms.CharField()
+
+  def save(self, user_id):
+    if not self.is_valid():
+      return
+
+    message = self.cleaned_data.get("message")
+
+    user = User.objects.get(pk=user_id)
+    obj = HeaderEntry.objects.create(message = message, user = user)
+    obj.save()
